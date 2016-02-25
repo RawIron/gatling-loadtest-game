@@ -1,4 +1,4 @@
-package loadtest
+package loadtest.userflows
 
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
@@ -16,7 +16,7 @@ import loadtest.gamestate.GameStateFeeder
 import loadtest.staticdata.{RestAPI => StaticDataRestAPI}
 
 
-class UserFlowReturningUserSimulation extends Simulation
+class ReturningUserSessionSimulation extends Simulation
                           with Headers
                           with UserInfoFeeder
                           with GameStateFeeder

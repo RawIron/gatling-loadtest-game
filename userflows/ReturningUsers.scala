@@ -1,4 +1,4 @@
-package loadtest
+package loadtest.userflows
 
 
 class User {

@@ -11,8 +11,6 @@ import assertions._
 import loadtest.util._
 import loadtest.settings._
 import loadtest.user.{RestAPI => UserRestAPI}
-import loadtest.fakebook.{RestAPI => FakebookRestAPI}
-import loadtest.facebook.{RestAPI => FacebookRestAPI}
 import loadtest.gamestate.{RestAPI => GameStateRestAPI}
 import loadtest.gamestate.GameStateFeeder
 import loadtest.scoreboards.{RestAPI => ScoreboardRestAPI}
@@ -21,7 +19,7 @@ import loadtest.staticdata.{RestAPI => StaticDataRestAPI}
 import loadtest.systems.{RestAPI => SystemRestAPI}
 
 
-class DroneFlowSimulation extends Simulation
+class SessionSimulation extends Simulation
                   with Headers
                   with UserInfoFeeder
                   with GameStateFeeder
@@ -43,8 +41,6 @@ class DroneFlowSimulation extends Simulation
     )
 
     .feed(access_token_generator)
-    .exec(FakebookRestAPI.fakebook_me)
-
 
     .tryMax(3) {
       // First Session
@@ -89,9 +85,6 @@ class DroneFlowSimulation extends Simulation
       .exec(GameStateRestAPI.match_version)
       .pause(120 milliseconds, 150 milliseconds)
 
-      .exec(FacebookRestAPI.facebook_connect)
-      .pause(0 milliseconds, 10 milliseconds)
-
       .feed(gamestate_generator)
       .exec(GameStateRestAPI.save_game)
       .pause(120 milliseconds, 150 milliseconds)
@@ -113,9 +106,6 @@ class DroneFlowSimulation extends Simulation
       .pause(1 seconds, 30 seconds)
 
       // Fourth Session
-      .exec(FacebookRestAPI.facebook_login)
-      .pause(0 milliseconds, 10 milliseconds)
-
       .exec(StaticDataRestAPI.get_static_data)
       .pause(500 milliseconds, 5000 milliseconds)
 
