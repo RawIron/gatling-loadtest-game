@@ -1,0 +1,112 @@
+swagger: '2.0'
+
+info:
+  version: "0.1.0"
+  title: <game api>
+
+paths:
+  /game/player/save_game:
+    post:
+      description: |
+        Saves snapshot of `game state`.
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: user number
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          description: session key
+          required: true
+          type: string
+        -
+          name: version_token
+          in: query
+          description: version token of gamestate
+          required: true
+          type: string
+        -
+          name: game_state
+          in: query
+          description: snapshot of game state
+          required: true
+          type: string
+          format: json
+      
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+                version_token:
+                  type: string
+
+  /game/player/load_game:
+    get:
+      description: |
+        Get `game state` objects.
+      parameters:
+        -
+          name: user_id
+          in: query
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+                version_token:
+                  type: string
+                game_content:
+                  type: string
+                  format: json
+
+  /game/player/match_version:
+    post:
+      description: |
+        Saves `version token`.
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: user number
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          description: session key
+          required: true
+          type: string
+        -
+          name: version_token
+          in: query
+          description: version token of gamestate
+          required: true
+          type: string
+      
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+   
