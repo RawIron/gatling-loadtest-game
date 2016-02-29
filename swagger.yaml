@@ -109,4 +109,113 @@ paths:
               properties:
                 success:
                   type: boolean
-   
+  
+  /gifts/send_gift:
+    post:
+      description: |
+        Saves `gift` for the receiver.
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: user number
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          description: session key
+          required: true
+          type: string
+        -
+          name: to
+          in: query
+          description: receiver's user number
+          required: true
+          type: number
+          format: int64
+        -
+          name: data
+          in: query
+          description: unique name of gift
+          required: true
+          type: string
+  
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+                gift:
+                  type: string
+  
+  /gifts/get_gifts:
+    get:
+      description: |
+        Get `gift` objects.
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: user number
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          description: session key
+          required: true
+          type: string
+  
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+  
+  /gifts/accept_gift:
+    get:
+      description: |
+        Accept one `gift`.
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: unique user number
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          description: session key
+          required: true
+          type: string
+        -
+          name: gift_id
+          in: query
+          description: unique gift id
+          required: true
+          type: number
+          format: int64
+          
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  
