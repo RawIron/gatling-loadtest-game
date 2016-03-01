@@ -2,7 +2,13 @@ swagger: '2.0'
 
 info:
   version: "0.1.0"
-  title: <game api>
+  description: api spec as needed for load testing.
+  title: <game api as provided>
+
+host: api.game.com
+
+produces:
+  - application/json
 
 paths:
   /game/player/save_game:
@@ -111,11 +117,7 @@ paths:
         200:
           description: success
           schema:
-              title: Response
-              type: object
-              properties:
-                success:
-                  type: boolean
+            $ref: '#/definitions/SimpleResponse'
   
   /gifts/send_gift:
     post:
@@ -189,11 +191,7 @@ paths:
         200:
           description: success
           schema:
-              title: Response
-              type: object
-              properties:
-                success:
-                  type: boolean
+            $ref: '#/definitions/SimpleResponse'
   
   /gifts/accept_gift:
     get:
@@ -226,11 +224,7 @@ paths:
         200:
           description: success
           schema:
-              title: Response
-              type: object
-              properties:
-                success:
-                  type: boolean
+            $ref: '#/definitions/SimpleResponse'
 
 
   /user/login/unregistered:
@@ -249,16 +243,7 @@ paths:
         200:
           description: success
           schema:
-              title: Response
-              type: object
-              properties:
-                success:
-                  type: boolean
-                user_id:
-                  type: number
-                  format: int64
-                skey:
-                  type: string
+            $ref: '#/definitions/NewSessionResponse'
 
 
   /user/login/:
@@ -282,16 +267,7 @@ paths:
         200:
           description: success
           schema:
-              title: Response
-              type: object
-              properties:
-                success:
-                  type: boolean
-                user_id:
-                  type: number
-                  format: int64
-                skey:
-                  type: string
+            $ref: '#/definitions/NewSessionResponse'
 
   /user/logout/:
     get:
@@ -315,11 +291,7 @@ paths:
         200:
           description: success
           schema:
-              title: Response
-              type: object
-              properties:
-                success:
-                  type: boolean
+            $ref: '#/definitions/SimpleResponse'
 
   /user/connect/:
     get:
@@ -363,11 +335,7 @@ paths:
         200:
           description: success
           schema:
-              title: Response
-              type: object
-              properties:
-                success:
-                  type: boolean
+            $ref: '#/definitions/SimpleResponse'
 
   /user/register/:
     get:
@@ -400,8 +368,119 @@ paths:
         200:
           description: success
           schema:
-              title: Response
-              type: object
-              properties:
-                success:
-                  type: boolean
+            $ref: '#/definitions/SimpleResponse'
+                  
+
+  /connection/connection_check/:
+    get:
+      description: |
+        Ping.
+      tags:
+        - system
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/SimpleResponse'                  
+                  
+
+  /game/data/static:
+    get:
+      description: |
+        Get lists of `static data` objects.
+      tags:
+        - content
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/StaticDataResponse'
+
+  /game/data/content:
+    get:
+      description: |
+        Get list of `content` objects.
+      tags:
+        - content
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/ContentResponse'
+
+
+definitions:
+  SimpleResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+        
+  AbstractResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+      data:
+        type: string
+        format: json
+
+  NewSession:
+    type: object
+    properties:
+      user_id:
+        type: number
+        format: int64
+      skey:
+        type: string
+        
+  NewSessionResponse_:
+    description: this would be the consistent way to do it
+    type: object
+    properties:
+      success:
+        type: boolean
+      data:
+        $ref: '#/definitions/NewSession'
+
+  NewSessionResponse:
+    description: inconsistent, see AbstractResponse
+    type: object
+    properties:
+      success:
+        type: boolean
+      user_id:
+        type: number
+        format: int64
+      skey:
+        type: string
+
+  Avatar:
+    type: object
+    properties:
+      name:
+        type: string
+
+  StaticData:
+    type: object
+    properties:
+      avatars:
+        type: array
+        items:
+          $ref: '#/definitions/Avatar'
+  
+  StaticDataResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+      data:
+        $ref: '#/definitions/StaticData'
+  
+  ContentResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+      data:
+        type: string
