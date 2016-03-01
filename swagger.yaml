@@ -222,7 +222,6 @@ paths:
           format: int64
       tags:
         - gifts
-        
       responses:
         200:
           description: success
@@ -232,4 +231,177 @@ paths:
               properties:
                 success:
                   type: boolean
-                  
+
+
+  /user/login/unregistered:
+    get:
+      description: |
+        Create a new `session` for any `user`.
+      parameters:
+        -
+          name: uid
+          in: query
+          required: true
+          type: string
+      tags:
+        - user
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+                user_id:
+                  type: number
+                  format: int64
+                skey:
+                  type: string
+
+
+  /user/login/:
+    get:
+      description: |
+        Create a new `session` for `authenticated user`.
+      parameters:
+        -
+          name: username
+          in: query
+          required: true
+          type: string
+        -
+          name: password
+          in: query
+          required: true
+          type: string
+      tags:
+        - user
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+                user_id:
+                  type: number
+                  format: int64
+                skey:
+                  type: string
+
+  /user/logout/:
+    get:
+      description: |
+        Drop `session` of `user`.
+      parameters:
+        -
+          name: user_id
+          in: query
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          required: true
+          type: string
+      tags:
+        - user
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+
+  /user/connect/:
+    get:
+      description: |
+        Add another `user` object to this `user id`.
+      parameters:
+        -
+          name: user_id
+          in: query
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          required: true
+          type: string
+        -
+          name: username
+          in: query
+          required: true
+          type: string
+        -
+          name: email
+          in: query
+          required: true
+          type: string
+        -
+          name: password
+          in: query
+          required: true
+          type: string
+        -
+          name: password_confirm
+          in: query
+          required: true
+          type: string
+      tags:
+        - user
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
+
+  /user/register/:
+    get:
+      description: |
+        Create a `user` object.
+      parameters:
+        -
+          name: username
+          in: query
+          required: true
+          type: string
+        -
+          name: email
+          in: query
+          required: true
+          type: string
+        -
+          name: password
+          in: query
+          required: true
+          type: string
+        -
+          name: password_confirm
+          in: query
+          required: true
+          type: string
+      tags:
+        - user
+      responses:
+        200:
+          description: success
+          schema:
+              title: Response
+              type: object
+              properties:
+                success:
+                  type: boolean
