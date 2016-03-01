@@ -408,6 +408,105 @@ paths:
           schema:
             $ref: '#/definitions/ContentResponse'
 
+  /scoreboard/set_score/:
+    post:
+      description: |
+        Update user's `score` on the scoreboard.
+      parameters:
+        -
+          name: user_id
+          in: query
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          required: true
+          type: string
+        -
+          name: scoreboard
+          in: query
+          required: true
+          type: string
+        -
+          name: score
+          in: query
+          required: true
+          type: number
+          format: int32
+      tags:
+        - scoreboard
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/SimpleResponse'
+           
+
+  /scoreboard/get_scores/:
+    post:
+      description: |
+        Get user's `score` on this scoreboard.
+      parameters:
+        -
+          name: user_id
+          in: query
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          required: true
+          type: string
+        -
+          name: scoreboard
+          in: query
+          required: true
+          type: string
+      tags:
+        - scoreboard
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/SimpleResponse'            
+           
+
+  /scoreboard/friends/:
+    post:
+      description: |
+        Get `score` of user's friends on this scoreboard.
+      parameters:
+        -
+          name: user_id
+          in: query
+          required: true
+          type: number
+          format: int64
+        -
+          name: skey
+          in: query
+          required: true
+          type: string
+        -
+          name: scoreboard
+          in: query
+          required: true
+          type: string
+        -
+          name: friends
+          in: query
+          required: true
+          type: string
+      tags:
+        - scoreboard
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/SimpleResponse' 
 
 definitions:
   SimpleResponse:
