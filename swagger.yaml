@@ -49,6 +49,20 @@ parameters:
     type: number
     format: int64
     required: true
+  
+  skey:
+    name: skey
+    in: query
+    description: session key
+    required: true
+    type: string
+  
+  version_token:
+    name: version_token
+    in: query
+    description: version token of gamestate
+    required: true
+    type: string
 
 
 paths:
@@ -58,18 +72,8 @@ paths:
         Saves snapshot of `game state`.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          description: session key
-          required: true
-          type: string
-        -
-          name: version_token
-          in: query
-          description: version token of gamestate
-          required: true
-          type: string
+        - $ref: '#/parameters/skey'
+        - $ref: '#/parameters/version_token'
         -
           name: game_state
           in: query
@@ -121,22 +125,10 @@ paths:
         Saves `version token`.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          description: session key
-          required: true
-          type: string
-        -
-          name: version_token
-          in: query
-          description: version token of gamestate
-          required: true
-          type: string
-      
+        - $ref: '#/parameters/skey'
+        - $ref: '#/parameters/version_token'
       tags:
         - gamestate
-        
       responses:
         200:
           description: success
@@ -149,12 +141,7 @@ paths:
         Saves `gift` for the receiver.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          description: session key
-          required: true
-          type: string
+        - $ref: '#/parameters/skey'
         -
           name: to
           in: query
@@ -190,13 +177,7 @@ paths:
         Get `gift` objects.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          description: session key
-          required: true
-          type: string
-      
+        - $ref: '#/parameters/skey'
       tags:
         - gifts
       responses:
@@ -211,12 +192,7 @@ paths:
         Accept one `gift`.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          description: session key
-          required: true
-          type: string
+        - $ref: '#/parameters/skey'
         -
           name: gift_id
           in: query
@@ -281,11 +257,7 @@ paths:
         Drop `session` of `user`.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          required: true
-          type: string
+        - $ref: '#/parameters/skey'
       tags:
         - user
       responses:
@@ -300,11 +272,7 @@ paths:
         Add another `user` object to this `user id`.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          required: true
-          type: string
+        - $ref: '#/parameters/skey'
         -
           name: username
           in: query
@@ -410,11 +378,7 @@ paths:
         Update user's `score` on the scoreboard.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          required: true
-          type: string
+        - $ref: '#/parameters/skey'
         -
           name: scoreboard
           in: query
@@ -441,11 +405,7 @@ paths:
         Get user's `score` on this scoreboard.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          required: true
-          type: string
+        - $ref: '#/parameters/skey'
         -
           name: scoreboard
           in: query
@@ -466,11 +426,7 @@ paths:
         Get `score` of user's friends on this scoreboard.
       parameters:
         - $ref: '#/parameters/user_id'
-        -
-          name: skey
-          in: query
-          required: true
-          type: string
+        - $ref: '#/parameters/skey'
         -
           name: scoreboard
           in: query
