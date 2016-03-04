@@ -1,14 +1,55 @@
+---
+
 swagger: '2.0'
 
 info:
   version: "0.1.0"
-  description: api spec as needed for load testing.
-  title: <game api as provided>
+  title: game api as provided
+  description: |
+    api spec as needed for load testing.
+    responses are often only checked for success. the `data` is not verified to be correct.
+    thus the spec simplifies `data` to be a `string`.
+    
+    the design of the api is a little awkward.
+    for example
+    * the `session key` is passed by parameter and not by header.
+    * for consistency the below would have been nice.
+    ```json
+    response = { success: boolean,
+                 data: {}
+               }
+    ```
+    * no usage of `<user_id>` in the url like
+    ```
+    GET /user/<user_id>
+    ```
+
 
 host: api.game.com
-
+schemes:
+  - http
 produces:
   - application/json
+
+
+tags:
+  - name: gamestate
+  - name: gifts
+  - name: user
+  - name: system
+  - name: content
+  - name: scoreboard
+
+
+parameters:
+  user_id:
+    name: user_id
+    in: query
+    description: unique user identifier
+    type: number
+    format: int64
+    required: true
+
 
 paths:
   /game/player/save_game:
@@ -16,13 +57,7 @@ paths:
       description: |
         Saves snapshot of `game state`.
       parameters:
-        -
-          name: user_id
-          in: query
-          description: user number
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
@@ -62,12 +97,7 @@ paths:
       description: |
         Get `game state` objects.
       parameters:
-        -
-          name: user_id
-          in: query
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
       tags:
         - gamestate
       responses:
@@ -90,13 +120,7 @@ paths:
       description: |
         Saves `version token`.
       parameters:
-        -
-          name: user_id
-          in: query
-          description: user number
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
@@ -124,13 +148,7 @@ paths:
       description: |
         Saves `gift` for the receiver.
       parameters:
-        -
-          name: user_id
-          in: query
-          description: user number
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
@@ -171,13 +189,7 @@ paths:
       description: |
         Get `gift` objects.
       parameters:
-        -
-          name: user_id
-          in: query
-          description: user number
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
@@ -198,13 +210,7 @@ paths:
       description: |
         Accept one `gift`.
       parameters:
-        -
-          name: user_id
-          in: query
-          description: unique user number
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
@@ -274,12 +280,7 @@ paths:
       description: |
         Drop `session` of `user`.
       parameters:
-        -
-          name: user_id
-          in: query
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
@@ -298,12 +299,7 @@ paths:
       description: |
         Add another `user` object to this `user id`.
       parameters:
-        -
-          name: user_id
-          in: query
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
@@ -413,12 +409,7 @@ paths:
       description: |
         Update user's `score` on the scoreboard.
       parameters:
-        -
-          name: user_id
-          in: query
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
@@ -449,12 +440,7 @@ paths:
       description: |
         Get user's `score` on this scoreboard.
       parameters:
-        -
-          name: user_id
-          in: query
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
@@ -479,12 +465,7 @@ paths:
       description: |
         Get `score` of user's friends on this scoreboard.
       parameters:
-        -
-          name: user_id
-          in: query
-          required: true
-          type: number
-          format: int64
+        - $ref: '#/parameters/user_id'
         -
           name: skey
           in: query
