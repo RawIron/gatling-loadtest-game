@@ -1,2 +1,7 @@
-# gatling-scala-game
-load testing a REST-ful api of a game back-end with gatling
+## Load Test a simple Game API
+load testing an API of a game back-end with Gatling
+
+API spec is done with Swagger. Load tests are written using Gatling.
+
+### Run the load tests
+
