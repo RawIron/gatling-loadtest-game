@@ -59,7 +59,7 @@
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>2.11.2</version>
+            <version>2.11.7</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -102,7 +102,7 @@
 
     <build>
         <sourceDirectory>.</sourceDirectory>
-        <testSourceDirectory>src</testSourceDirectory>
+        <testSourceDirectory>.</testSourceDirectory>
         <resources>
             <resource>
                 <directory>src/resources</directory>
@@ -118,7 +118,14 @@
             <plugin>
                 <groupId>io.gatling</groupId>
                 <artifactId>gatling-maven-plugin</artifactId>
-                <version>2.7.1</version>
+                <version>2.1.7</version>
+                <configuration>
+                    <simulationsFolder>${project.basedir}</simulationsFolder>
+                    <configFolder>${project.basedir}/test/resources</configFolder>
+                    <dataFolder>${project.basedir}/test/resources/data</dataFolder>
+                    <bodiesFolder>${project.basedir}/test/resources/bodies</bodiesFolder>
+                    <resultsFolder>${project.basedir}/target/gatling/results</resultsFolder>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
