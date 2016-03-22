@@ -55,7 +55,7 @@ trait UserInfoFeeder
     // random number in between [a...b]
     private def randInt(a:Int, b:Int) = RNG.nextInt(b-a) + a
 
-    private def daysOfMonth(year:Int, month:Int) = new DateTime(year, month, 1, 0, 0, 0, 000).dayOfMonth.getMaximumValue
+    private def daysOfMonth(year:Int, month:Int) = new DateTime(year, month, 1, 0, 0, 0, 0).dayOfMonth.getMaximumValue
 
     // always return true as this feeder can be polled infinitively
     override def hasNext = true

@@ -3,10 +3,8 @@ package loadtest.userflows
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
-import io.gatling.http.Headers.Names._
+import io.gatling.http.HeaderNames._
 import scala.concurrent.duration._
-import bootstrap._
-import assertions._
 
 import loadtest.util._
 import loadtest.settings._
@@ -49,17 +47,17 @@ class FirstSessionSimulation extends Simulation
 
       .repeat(2) {
   	    randomSwitch (
-  	      83 -> exec(GameStateRestAPI.save_game)
+  	      83.0 -> exec(GameStateRestAPI.save_game)
   	    )
   	    .pause(100 milliseconds, 140 milliseconds)
 
   	    .randomSwitch (
-  	      47 -> exec(GameStateRestAPI.save_game)
+  	      47.0 -> exec(GameStateRestAPI.save_game)
   	    )
   	    .pause(60 milliseconds, 90 milliseconds)
 
   	    .randomSwitch (
-  	      18 -> exec(GameStateRestAPI.save_game)
+  	      18.0 -> exec(GameStateRestAPI.save_game)
   	    )
   	    .pause(140 milliseconds, 260 milliseconds)
       }
@@ -68,11 +66,11 @@ class FirstSessionSimulation extends Simulation
 
   setUp(
     scn.inject(
-    ramp(LoadSettings.BURST_USERS users)
-      over (LoadSettings.BURST_TIME seconds),
-    rampRate (LoadSettings.RAMP_USERS_START usersPerSec) to (LoadSettings.RAMP_USERS_END usersPerSec)
-      during (LoadSettings.RAMP_TIME seconds),
-    constantRate(LoadSettings.ENDURANCE_USERS usersPerSec)
-      during (LoadSettings.ENDURANCE_TIME seconds))
+      rampUsers(LoadSettings.BURST_USERS)
+        over (LoadSettings.BURST_TIME seconds),
+      rampUsersPerSec(LoadSettings.RAMP_USERS_START) to (LoadSettings.RAMP_USERS_END)
+        during (LoadSettings.RAMP_TIME seconds),
+      constantUsersPerSec(LoadSettings.ENDURANCE_USERS)
+        during (LoadSettings.ENDURANCE_TIME seconds))
     ).protocols(httpConf)
 }

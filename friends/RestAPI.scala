@@ -3,11 +3,9 @@ package loadtest.friends
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
-import io.gatling.http.Headers.Names._
+import io.gatling.http.HeaderNames._
 
 import scala.concurrent.duration._
-import bootstrap._
-import assertions._
 
 import loadtest.util._
 import loadtest.friends.settings._
@@ -18,9 +16,9 @@ object RestAPI extends Headers
   val add_friend =
     http("add_friend")
       .post(Settings.ADD_FRIEND)
-      .param("user", "${username}")
-      .param("facebook", "${facebook_user}")
-      .param("name", "${facebook_name}")
+      .formParam("user", "${username}")
+      .formParam("facebook", "${facebook_user}")
+      .formParam("name", "${facebook_name}")
       .headers(headers_3)
       .check(
           status.is(200),
@@ -31,7 +29,7 @@ object RestAPI extends Headers
   val get_friends =
     http("get_friends")
       .post(Settings.GET_FRIENDS)
-      .param("facebook_ids", "${my_friends}")
+      .formParam("facebook_ids", "${my_friends}")
       .headers(headers_3)
       .check(
         status.is(200),
@@ -53,7 +51,7 @@ object RestAPI extends Headers
   val get_friends_multi_value =
     http("get_friends")
       .post(Settings.GET_FRIENDS)
-      .multiValuedQueryParam("facebook_ids", "${my_friends}")
+      .multivaluedQueryParam("facebook_ids", "${my_friends}")
       .headers(headers_3)
       .check(
         status.is(200),

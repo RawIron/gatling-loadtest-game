@@ -3,13 +3,12 @@ package loadtest.riak
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
-import io.gatling.http.Headers.Names._
+import io.gatling.http.HeaderNames._
 import scala.concurrent.duration._
-import bootstrap._
-import assertions._
+import loadtest.settings._
 
 
-class UserSimulation extends Simulation {
+class RiakUserSimulation extends Simulation {
 
   val httpConf = http
     .baseURL("http://ip-172-31-21-253.us-west-2.compute.internal:8098")
@@ -54,7 +53,7 @@ class UserSimulation extends Simulation {
     // random number in between [a...b]
     private def randInt(a:Int, b:Int) = RNG.nextInt(b-a) + a
 
-    private def daysOfMonth(year:Int, month:Int) = new DateTime(year, month, 1, 0, 0, 0, 000).dayOfMonth.getMaximumValue
+    private def daysOfMonth(year:Int, month:Int) = new DateTime(year, month, 1, 0, 0, 0, 0).dayOfMonth.getMaximumValue
 
     // always return true as this feeder can be polled infinitively
     override def hasNext = true
@@ -117,8 +116,11 @@ class UserSimulation extends Simulation {
     .pause(0 milliseconds, 10 milliseconds)
 
 
-  setUp(scn.inject(
-    ramp(100 users) over (10 seconds),
-    constantRate(40 usersPerSec) during (180 seconds)))
-    .protocols(httpConf)
+  setUp(
+    scn.inject(
+    rampUsers(LoadSettings.BURST_USERS)
+      over (LoadSettings.BURST_TIME seconds),
+    constantUsersPerSec(LoadSettings.ENDURANCE_USERS)
+      during (LoadSettings.ENDURANCE_TIME seconds))
+  ).protocols(httpConf)
 }

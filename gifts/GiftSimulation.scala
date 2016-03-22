@@ -3,10 +3,8 @@ package loadtest.gifts
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
-import io.gatling.http.Headers.Names._
+import io.gatling.http.HeaderNames._
 import scala.concurrent.duration._
-import bootstrap._
-import assertions._
 
 
 import loadtest.util._
@@ -47,9 +45,9 @@ class GiftSimulation extends Simulation
 
   setUp(
     scn.inject(
-    ramp(LoadSettings.BURST_USERS users)
-      over (LoadSettings.BURST_TIME seconds),
-    constantRate(LoadSettings.ENDURANCE_USERS usersPerSec)
-      during (LoadSettings.ENDURANCE_TIME seconds))
+      rampUsers(LoadSettings.BURST_USERS)
+        over (LoadSettings.BURST_TIME seconds),
+      constantUsersPerSec(LoadSettings.ENDURANCE_USERS)
+        during (LoadSettings.ENDURANCE_TIME seconds))
   ).protocols(httpConf)
 }
